@@ -1,0 +1,137 @@
+﻿@model IEnumerable<Core.Models.InterviewTestResult>
+@{
+	ViewData["Title"] = "Interview Results";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+
+	body {
+		counter-reset: Serial; /* / Set the Serial counter to 0 /*/
+	}
+
+	tr td:first-child:before {
+		counter-increment: Serial; /* / Increment the Serial counter /*/
+		content: counter(Serial); /*  / Display the counter /*/
+	}
+</style>
+
+<!-- Page Header -->
+<div class="page-header">
+
+	<div class="row">
+		<div class="col">
+			<h3 class="page-title">Interview Result</h3>
+		</div>
+	</div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+	<div class="col-md-12">
+		@if (@Model.Count() > 0 && Model != null)
+		{
+			<div class="table-responsive">
+				<table class="table table-striped custom-table mb-0 datatable">
+					<thead>
+						<tr>
+							<th>S/N</th>
+							<th>Applicant's Name</th>
+							<th>Applicant's Email</th>
+							<th>Total Score(%)</th>
+							<th>Date Written</th>
+							<th>Status</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					@foreach (var result in Model)
+					{
+						<tbody>
+							<tr>
+								<td></td>
+								<td>@result.Applicants.FullName</td>
+								<td>@result.Applicants.Email</td>
+								<td>@result.TotalScore</td>
+								<td>@result.DateWritten.ToShortDateString()</td>
+								<td>@result.Applicants.Status</td>
+								<td class="text-center">
+									<div class="dropdown dropdown-action">
+										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+										<div class="dropdown-menu dropdown-menu-right">
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#accept_application" onclick="MappStudentId('@result.UserId')"><i class="fa fa-check-circle m-r-5 text-success"></i>Qualify</a>
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#decliine_application" onclick="MappStudentId('@result.UserId')"><i class="fa fa-trash-o m-r-5 text-danger"></i>Disqualify</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					}
+				</table>
+			</div>
+		}
+		else
+		{
+			<div cclass="row p5 m-5">
+				<div class="col-md-12 text-center p-5 m5">
+					<h2>No Record Found</h2>
+				</div>
+			</div>
+		}
+	</div>
+</div>
+<!-- Accept Application Modal -->
+<div class="modal custom-modal fade" id="accept_application" role="dialog">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="form-header">
+					<h3>Accept</h3>
+					<input hidden id="qualifyId">
+					<p>Are you sure want to Qualify this applicant?</p>
+				</div>
+				<div class="modal-btn">
+					<div class="row">
+						<div class="col-6">
+							<a class="btn btn-success continue-btn" onclick="AcceptApplicationPost()">Accept</a>
+						</div>
+						<div class="col-6">
+							<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Accept Application Modal -->
+<!-- Decline Application Modal -->
+<div class="modal custom-modal fade" id="decliine_application" role="dialog">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="form-header">
+					<h3>Delicine</h3>
+					<input hidden id="disqualifyId">
+					<p>Are you sure want to Disqualify this applicant?</p>
+				</div>
+				<div class="modal-btn">
+					<div class="row">
+						<div class="col-6">
+							<a class="btn btn-danger continue-btn" onclick="RejectApplicationPost()">Disqaulify</a>
+						</div>
+						<div class="col-6">
+							<a href="javascript:void(0);" data-dismiss="modal" class="btn cancel-btn">Cancel</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Decline Application Modal -->
+<script>
+	function MappStudentId(Id) {
+		$("#qualifyId").val(Id);
+		$("#disqualifyId").val(Id);
+	}
+</script>

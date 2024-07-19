@@ -1,0 +1,374 @@
+﻿@{
+	var user = Session.GetCurrentUser();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]Academy</title>
+		
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.png" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/home/lib/animate/animate.min.css" rel="stylesheet"/>
+    <link href="~/home/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/home/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="~/home/css/w3.css" rel="stylesheet"/>
+    <link href="~/home/css/style.css" rel="stylesheet"/>
+    <link href="~/home/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!-- Template Stylesheet -->
+    <link href="~/home/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/sweetalert2.min.css" />
+    <!-- Fontawesome CSS -->
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="~/css/select2.min.css">
+    <script>
+        $(window).on('load', function () {
+            $('#loader').delay(300).fadeOut('slow');
+            $('#loader-wrapper').delay(500).fadeOut('slow');
+        });
+    </script>
+    <script>
+        function errorAlert(message) {
+            Swal.fire({
+                icon: 'error',
+                text: message,
+                confirmButtonColor: "#0253cc",
+                timer: 30000,
+            })
+        }
+
+        function infoAlert(message) {
+            Swal.fire({
+                icon: 'info',
+                text: message,
+                confirmButtonColor: "#0253cc",
+            })
+        }
+
+        function infoAlertWithStyles(message) {
+            Swal.fire({
+                title: 'Notification',
+                icon: 'info',
+                text: message,
+            })
+        }
+
+        function successAlert(message) {
+            Swal.fire({
+                icon: 'success',
+                text: message,
+                confirmButtonColor: "#0253cc",
+                timer: 30000,
+            })
+        }
+
+        function newErrorAlert(message, url) {
+            Swal.fire({
+                icon: 'error',
+                text: message,
+                confirmButtonColor: "#0253cc",
+            }).then((isConfirm) => {
+                if (isConfirm) {
+                    location.reload(url);
+                }
+            })
+        }
+
+        		
+       function errorAlertWithRedirect(message, url) {
+            Swal.fire({
+                title: "Error",
+                text: message,
+                icon: "error",
+                timer: 30000,
+                confirmButtonColor: "#0253cc",
+                overlay: "background - color: rgba(43, 165, 137, 0.45)",
+            }).then(function () {
+
+                location.href = url;
+            })
+        }
+
+        function newSuccessAlert(message, url) {
+            Swal({
+                icon: 'success',
+                text: message,
+                confirmButtonColor: "#0253cc",
+            }).then((isConfirm) => {
+                if (isConfirm) {
+                    location.reload(url);
+                }
+            })
+        }
+
+        function successAlertWithRedirect(message, url) {
+            Swal.fire({
+                title: "Success",
+                text: message,
+                icon: "success",
+                timer: 30000,
+                confirmButtonColor: "#0253cc",
+                overlay: "background - color: rgba(43, 165, 137, 0.45)",
+            }).then(function () {
+
+                location.href = url;
+            })
+        }
+
+        function errorAlertwithTwoButtons(yesUrl, noUrl, newUrl, errorTitle) {
+            Swal.fire({
+                title: errorTitle,
+                text: "",
+                icon: "error",
+                buttons: {
+                    cancle: "No",
+                    confirmButtonColor: "#0253cc",
+                    change: "Yes",
+                    new: "Create Pin",
+                },
+            })
+                .then((status) => {
+                    debugger;
+                    switch (status) {
+                        case "change":
+                            location.href = yesUrl;
+                            break;
+                        case "new":
+                            location.href = newUrl;
+                            break;
+                        default:
+                            location.href = noUrl;
+                    }
+                });
+        }
+
+        function SweeTest(yesUrl, noUrl) {
+            Swal.fire({
+                title: "Unverified E-mail Address",
+                text: "Check your inbox Or Change email",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#0253cc",
+                confirmButtonText: "Resend Email",
+                cancelButtonText: "Change Email",
+                cancelButtonColor: "#D3AF71",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            })
+                .then((result) => {
+                    debugger
+                    if (result.isConfirmed) {
+                        location.href = yesUrl
+                    }
+                    else {
+                        location.href = noUrl
+                    }
+
+                });
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark text-light p-0">
+        <div class="row gx-0 d-none d-lg-flex">
+            <div class="col-lg-7 px-5 text-start">
+                <div class="h-100 d-inline-flex align-items-center me-4">
+                    <small class="fa fa-map-marker text-primary me-2"></small>
+                    <small>O:12 Chime Avenue New Heaven, Enugu East, Enugu,Nigeria.</small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center">
+                    <small class="far fa-clock text-primary me-2"></small>
+                    <small>Mon - Fri : 09.00 AM - 05.00 PM</small>
+                </div>
+            </div>
+            <div class="col-lg-5 px-5 text-end">
+                <div class="h-100 d-inline-flex align-items-center me-4">
+                    <small class="fa fa-phone text-primary me-2"></small>
+                    <small>+234 703 312 1121</small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center mx-n2">
+                    <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary" target="_blank" href="https://web.facebook.com/bivisoft"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary" target="_blank" href="https://twitter.com/Bivisoft"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary" target="_blank" href="https://www.linkedin.com/company/bivisoft"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-square btn-link rounded-0" target="_blank" href="https://www.instagram.com/bivisoft/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
+        <a asp-controller="Home" asp-action="Index" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
+            <h2 class="m-0"><img class="me-2" src="~/img/favicon.png" />BvAcademy</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Home</a>
+                <a href="#bvAbout" class="nav-item nav-link">About</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
+                    <div class="dropdown-menu bg-light m-0">
+                        <a href="#" class="dropdown-item">Bivisoft Training</a>
+                        <a href="#" class="dropdown-item">Bivisoft Fellowship</a>
+                        <a href="#" class="dropdown-item">Mobile Development</a>
+                        <a href="#" class="dropdown-item">Web Development</a>
+                        <a href="#" class="dropdown-item">Cloud and DevOps</a>
+                    </div>
+                </div>
+                <a href="#bvContact" class="nav-item nav-link">Contact</a>
+                <a asp-controller="Home" asp-action="FAQ" class="nav-item nav-link">F.A.Q</a>
+                @if (User.Identity.IsAuthenticated && user != null) 
+                {
+                    <a asp-area="" asp-controller="Accounts" asp-action="LogOut" class="nav-item nav-link">Log Out</a>
+                }
+                else
+                {
+                    <a asp-area="" asp-controller="Accounts" asp-action="Login" class="nav-item nav-link">Login</a>
+                }
+            </div>
+            @if (User.Identity.IsAuthenticated && user != null)
+            {
+                @if (user.Role == Session.Constants.SuperAdminRole || user.Role == Session.Constants.AdminRole)
+                {
+                    <a asp-area="" asp-controller="Admin" asp-action="Index" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Dashboard<i class="fa fa-arrow-right ms-3"></i></a>
+                }
+                else
+                {
+                    // Students DashBoard
+                    <a asp-area="" asp-controller="Student" asp-action="Index" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Dashboard<i class="fa fa-arrow-right ms-3"></i></a>
+                }
+            }
+            else
+            {
+                <a asp-area="" asp-controller="Accounts" asp-action="Application" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Enroll Now!<i class="fa fa-arrow-right ms-3"></i></a>
+            }
+        </div>
+    </nav>
+    <!-- Navbar End -->
+    <main role="main">
+        @RenderBody()
+    </main>
+
+
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-light footer my-6 mb-0 py-6 wow fadeIn" data-wow-delay="0.1s" id="bvContact">
+    <div class="row g-5 px-3">
+        <div class="col-md-5">
+            <div class="row g-5">
+                <div class="col-lg-7 col-md-6">
+                    <h4 class="text-primary mb-2"><img class="me-2" src="~/img/favicon.png" />DSkills Academy</h4>
+                    <p class="text-white mt-2 mb-1">Because we have your interest at heart, we run a pay-as-you-earn internship programme. We train you before paying the tuition dues, except if you wish to pay upfront.</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-square btn-outline-light me-1" target="_blank" href="https://twitter.com/Bivisoft"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-outline-light me-1" target="_blank" href="https://web.facebook.com/bivisoft"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-outline-light me-1" target="_blank" href="https://www.linkedin.com/company/bivisoft"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-square btn-outline-light me-0" target="_blank" href="https://www.instagram.com/bivisoft/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6">
+                    <h4 class="mb-4 text-primary">Our Products</h4>
+                    <a class="btn btn-link" target="_blank" href="https://bivihr.com">BiviHr</a>
+                    <a class="btn btn-link" target="_blank" href="https://vettest.bivisoft.com">Vet Man</a>
+                    <a class="btn btn-link" target="_blank" href="https://www.smartenterapp.com">Smart Enter</a>
+                    <a class="btn btn-link" target="_blank" href="https://www.ggcprojects.com">Adifgeed</a>
+                    <a class="btn btn-link" target="_blank" href="https://Ecoscience.ng">Ecoscience</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <h4 class="mb-4 text-primary">UK Contact Info</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker me-3 text-primary"></i>63-66 Hatton Gardens, Fifth Floor, Suite 23 London, England, EC1N 8LE, United Kingdom.</p>
+                    <p class="mb-2"><i class="fa fa-phone me-3 text-primary"></i>+447404089237</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3 text-primary"></i>academy@bivisoft.com</p>
+                    <p class="mb-2"><i class="fa fa-clock me-3 text-primary"></i>Opening Hours: 09:00 - 17:00</p>
+                </div>
+                <div class="col-lg-6">
+                    <h4 class="mb-4 text-primary">Nigeria Contact Info</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker me-3 text-primary"></i>NO:12 Chime Avenue New Heaven, Enugu.</p>
+                    <p class="mb-2"><i class="fa fa-phone me-3 text-primary"></i>+234 703 312 1121</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3 text-primary"></i>academy@bivisoft.com</p>
+                    <p class="mb-2"><i class="fa fa-clock me-3 text-primary"></i>Opening Hours: 09am - 05 pm</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+<!-- Copyright Start -->
+<div class="container-fluid copyright text-light py-4 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                &copy; <a href="#">Digital Skills Academy</a>, All Right Reserved.
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                 Designed By <a href="https://bivisoft.com">DevEriwa</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Copyright End -->
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Bootstrap Core JS -->
+    <script src="~/home/lib/wow/wow.min.js"></script>
+    <script src="~/home/lib/easing/easing.min.js"></script>
+    <script src="~/home/lib/waypoints/waypoints.min.js"></script>
+    <script src="~/home/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/home/js/main.js"></script>
+    <!-- jQuery -->
+    <!-- Bootstrap Core JS -->
+    <script src="~/js/popper.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="~/js/select2.min.js"></script>
+    <!-- Slimscroll JS -->
+    <script src="~/js/jquery.slimscroll.min.js"></script>
+    <!-- Form Validation JS -->
+    <script src="~/js/form-validation.js"></script>
+    <!-- Custom JS -->
+    <script src="~/js/app.js"></script>
+    <script src="~/js/sweetalert2.all.min.js"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+    <!-- My script -->
+    <script src="~/js/site.js"></script>
+    <!-- Chart JS -->
+    <script src="~/js/chart.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
